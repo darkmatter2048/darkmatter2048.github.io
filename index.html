@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        p#pv{
+        width: 80%;
+        position: absolute;
+        top: 240%;
+        font-size: 38px;
+        color: #fff;
+        word-wrap:break-word; 
+        word-break:break-all; 
+        overflow: hidden;
+        }
+        p#pm{
+        color: #fff;
+        position: absolute;
+        left: 80%;
+        font-size: 20px;
+        }
+        p#p1{
+
+        position: absolute;
+
+        top: 90%;
+
+        left: 43%;
+
+        }
+
+        p#p2{
+        color: #fff;
+        position: absolute;
+        top: 205%;
+        left: 5%;
+        font-size: 20px
+        }
+        p#pg{
+        color: #fff;
+        position: absolute;
+        top: 223%;
+        left: 5%;
+        font-size: 20px
+        }
+        p#p3{
+
+        position: absolute;
+        top: 26%;
+        font-size: 230%;
+        width: 80%; 
+		overflow: hidden; 
+		white-space: nowrap; 
+        text-overflow: ellipsis;
+
+        }
+        p#p4{
+
+        position: absolute;
+        top: 50%;
+        font-size: 250%;
+        width: 80%; 
+		overflow: hidden; 
+		white-space: nowrap; 
+        text-overflow: ellipsis;
+
+        }
+        p#p5{
+
+        position: absolute;
+        top: 74%;
+        font-size: 250%;
+        width: 80%; 
+		overflow: hidden; 
+		white-space: nowrap; 
+        text-overflow: ellipsis;
+
+        }
+        p#p6{
+
+        position: absolute;
+        top: 98%;
+        font-size: 250%;
+        width: 80%; 
+		overflow: hidden; 
+		white-space: nowrap; 
+        text-overflow: ellipsis;
+
+        }
+        p#p7{
+
+        position: absolute;
+        top: 122%;
+        font-size: 250%;
+        width: 80%; 
+		overflow: hidden; 
+		white-space: nowrap; 
+        text-overflow: ellipsis;
+
+        }
+        body
+
+        { 
+
+        background: pink url('bgp/6.png') no-repeat fixed center; 
+
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: rgb(43, 52, 82);
+            background-image: url("./bgp/6.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+        }
+        .text{
+            font-family: 'fangsong';
+            display: inline-block;
+          position: relative;
+          font-size: 60px;
+          height: 60px;
+          line-height: 60px;
+          color: rgb(79, 255, 35);
+        }
+        .text::after{
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 5px;
+            height: 50px;
+            width: 3px;     
+            background-color: #fff;
+            animation: san 0.5s steps(1) infinite;
+        }
+        @keyframes san{
+            0%,100%{
+                background-color: rgb(79, 255, 35);
+            }
+            50%{
+               background-color: transparent;
+            }
+
+        }
+    </style>
+    <link rel="shortcut icon" href="img/logo2.0.png">
+</head>
+<body>
+    <h1>
+        <span class="text" ></span>
+    </h1>
+    <script>
+        const text = document.querySelector('.text');
+        const txt  =["This is DaYe's website","Welcome to DaYe's website"]; 
+        
+        var index=0;
+        var xiaBiao= 0;
+        var huan = true;
+     
+        setInterval(function(){
+           
+            if(huan){      
+                text.innerHTML = txt[xiaBiao].slice(0,++index);
+                console.log(index);
+            }
+            else{
+                text.innerHTML = txt[xiaBiao].slice(0,index--);
+                console.log(index);
+            }
+
+            if(index==txt[xiaBiao].length+3)
+            {
+                huan = false;
+            }
+            else if(index<0)
+            {
+                index = 0;
+                huan = true;
+                xiaBiao++;
+                if(xiaBiao>=txt.length)
+                {
+                    xiaBiao=0; 
+                }
+            }
+
+        },200)
+
+    </script>
+
+    
+    
+        <a href="./programs/data/FlappyBird.html"><img src="img/ok_btn.png"style="width: 80%;height: 13%;position: absolute;left: 10%;top: 25%;"/></a>  
+        <p id="p3" align="center"><a href="./programs/data/FlappyBird.html">Download FlappyBird for Windows x64</a></p>
+        <a href="none/index.html"><img src="img/ok_btn.png"style="width: 80%;height: 13%;position: absolute;left: 10%;top: 49%;"/></a>
+        <p id="p4" align="center"><a href="none/index.html">Download hotdog game for Windows x64</a></p>
+        <a href="none/index.html"><img src="img/ok_btn.png"style="width: 80%;height: 13%;position: absolute;left: 10%;top: 73%;"/></a>
+        <p id="p5" align="center"><a href="none/index.html">Download plane game for Windows x64</a></p>
+        <a href="./programs/data/The Matrix.html"><img src="img/ok_btn.png"style="width: 80%;height: 13%;position: absolute;left: 10%;top: 97%;"/></a>
+        <p id="p6" align="center"><a href="./programs/data/The Matrix.html">下载黑客帝国风格屏保(Windows x64)</a></p>
+        <a href="none/index.html"><img src="img/ok_btn.png"style="width: 80%;height: 13%;position: absolute;left: 10%;top: 121%;"/></a>
+        <p id="p7" align="center"><a href="none/index.html">To be continued</a></p>
+    <p id="pm"><img src="img/Music.png" alt="" class="musicBtn" onclick="bgaudio()" width="25%" title="点击 播放/暂停BGM">BGM
+        <audio src="audio/audio.mp3" id="bgaudio" loop="loop" ></audio>
+<script>
+    var bgaudiocount = 0;
+    function bgaudio(){
+        ++bgaudiocount;
+        if(bgaudiocount % 2 == 1){
+            document.getElementById("bgaudio").play();
+        }else{
+            document.getElementById("bgaudio").pause();
+        }
+ 
+    }
+ 
+</script>
+        </p>
+        <img src="img/w.png"style="width: 100%;height: 70%;position: absolute;top: 200%;"/>
+        <p id="pv"align="left">DaYe的邮箱:darkmatter2048@outlook.com</p>
+        <p id="p2"><img src="img/logo2.0.png" width="20%" />DaYe</p>
+        <p id="pg"><a href="https://github.com/"><img src="img/gl.png" width="20%" />GitHub</a></p>
+    
+</body>
+</html>
+<!-- 
+     _______       ___     __     __  ________
+    |  ___  \     / _ \    \ \   / /  |  _____|
+    | |   \  \   / / \ \    \ \ / /   |  |____
+    | |    | |  / /___\ \    \ V /    |  _____|
+    | |___/  / / /-----\ \    | |     |  |____
+    |_______/ /_/       \_\   |_|     |_______|
+ -->
