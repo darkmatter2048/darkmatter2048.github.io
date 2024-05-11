@@ -31,10 +31,22 @@ function displayFileList(files) {
         fileDate.style.textAlign = "center";
         listItem.appendChild(fileDate);
 
+        // 添加点击事件处理程序
         listItem.addEventListener('click', () => {
-            window.location.href = `doc/${file.name}`;
+            // 检查file.name是否是一个链接
+            if (isURL(file.name)) {
+                window.open(file.name, '_blank'); // 在新标签页中打开链接
+            } else {
+                window.open(`doc/${file.name}`, '_blank'); // 在新标签页中打开文件
+            }
         });
 
         fileList.appendChild(listItem);
     });
+}
+
+// 函数用于检查字符串是否是URL
+function isURL(str) {
+    // 此处简单地使用正则表达式来检查是否以http或https开头
+    return /^https?:\/\//.test(str);
 }
