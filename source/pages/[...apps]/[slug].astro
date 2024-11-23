@@ -1,0 +1,155 @@
+---
+import {Icon} from 'astro-iconify';
+import {SITE} from '~/config.mjs';
+import Layout from '~/layouts/PageLayout.astro';
+import OverflowMenu from '~/components/widgets/OverflowMenu.astro';
+import {fetchApps, proseCSS} from '~/utils/apps.js';
+
+export async function getStaticPaths() {
+	const apps = await fetchApps({includeArchived: true, includeUnlisted: true});
+
+	return apps.map(app => ({
+		params: {
+			slug: app.slug,
+		},
+		props: {
+			app,
+		},
+	}));
+}
+
+const {app} = Astro.props;
+
+const meta = {
+	title: `${app.title} — ${SITE.name}`,
+	description: app.subtitle,
+	image: app.iconUrl,
+	ogTitle: app.title,
+	ogType: 'product',
+	appStoreId: app.appStoreId,
+};
+
+const {title: appTitle, appStoreUrl} = app;
+
+// Copied from `apps.astro`.
+const tagClass = 'text-[10px] inline-flex items-center font-bold leading-sm px-1.5 text-black/70 dark:text-black rounded-lg';
+---
+
+<Layout {meta}>
+	<section class="max-w-3xl py-8 sm:py-16 lg:py-20 mx-auto lg:-mt-10 mb-10">
+		<article>
+			<header class="flex flex-col items-center text-center px-4 sm:px-6 mb-40">
+				<img src={app.iconUrl} width="224" height="224" class={`${app.hasIOSAppIcon ? 'p-[20px]' : ''} mb-3`}>
+				<h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+					{app.title}
+				</h1>
+				<h2 class="text-2xl md:text-3xl tracking-tight mb-8">
+					{app.subtitle}
+				</h2>
+				<div id="another-random-app" class="flex justify-center hidden instapaper_ignore">
+					<a href="/apps/random"
+						class="flex items-center gap-2 px-4 py-2 mb-6 font-semibold text-white bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full shadow-sm hover:shadow-md hover:from-primary-600 hover:to-secondary-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+						<Icon name="tabler:arrows-shuffle" class="w-5 h-5" aria-hidden="true"/>
+						Another Random App
+					</a>
+				</div>
+				{app.isArchived &&
+					<span class={`${tagClass} bg-orange-100 dark:bg-orange-200 text-[16px] mb-10`}>archived</span>
+				}
+				{(app.appStoreId || app.setappId || Object.keys(app.mainLinks).length > 0) &&
+					<nav class="flex flex-col sm:flex-row gap-x-4 gap-y-8 mt-2 instapaper_ignore">
+						<>
+							{!app.isArchived && app.appStoreId &&
+								<div class="relative">
+									<button id="share-button" class="hidden absolute inset-0 left-[-26px] opacity-90" style="width:16px">
+										<Icon name="tabler:share-2" class="w-4"/>
+									</button>
+									<a href={app.appStoreUrl}>
+										<img src="/assets/download-on-app-store-badge.svg" alt="Download on the App Store" style="margin: 0; padding: 0; display: block; height: 60px; user-select: none">
+									</a>
+								</div>
+							}
+						</>
+						<>
+							{!app.isArchived && app.setappId &&
+								<a href={app.setappUrl}>
+									<img src="/assets/download-on-setapp-badge.svg" alt="Download on Setapp" style="margin: 0; padding: 0; display: block; height: 60px; user-select: none">
+								</a>
+							}
+						</>
+						{Object.keys(app.mainLinks).length > 0 &&
+								<>
+									<!-- We apply a fixed size so it matches the App Store button. -->
+									{Object.entries(app.mainLinks).map(([title, url]) => (
+										<a href={url} class="text-white bg-primary-700 hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-bold rounded-lg text-xl px-6 text-center mb-2 flex justify-center items-center whitespace-nowrap px-10 py-4" style="width: 180px; height: 60px;">{title}</a>
+									))}
+								</>
+						}
+					</nav>
+				}
+				{Object.keys(app.links).length > 0 &&
+					<nav class="flex flex-wrap gap-4 max-w-md justify-center mt-8 font-semibold text-xl text-primary-600 instapaper_ignore">
+						<>
+							{Object.entries(app.links).map(([title, url]) => (
+								<a href={url} class="hover:text-primary-400 dark:text-primary-400 dark:hover:text-primary-200">{title}</a>
+							))}
+						</>
+						<OverflowMenu>
+							{Object.entries(app.overflowLinks ?? []).map(([title, url]) => (
+								<option value={url}>{title}</option>
+							))}
+							{!app.isArchived && app.appStoreId && (
+								<option value={app.appStoreUrl}>What’s New</option>
+							)}
+							{!app.isArchived && (
+								<option value={`/${app.slug}/privacy-policy`}>Privacy Policy</option>
+							)}
+							<option value="/apps/terms">Terms of Use</option>
+							{app.isPaid && <option value="/apps/discounts">Discounts</option>}
+							<hr>
+							<option value="/apps/random">Show Random App</option>
+						</OverflowMenu>
+					</nav>
+				}
+			</header>
+			<div class={proseCSS}>
+				<section class="mb-20">
+					{app.videos.map(video => (
+						<video src={video} autoplay loop muted alt="App preview video"/>
+					))}
+					{app.screenshots.map(screenshot => (
+						<img src={screenshot.src} width={screenshot.width} height={screenshot.height} alt="App screenshot">
+					))}
+				</section>
+				<app.Content/>
+			</div>
+		</article>
+	</section>
+</Layout>
+
+<script type="module" is:inline define:vars={{appTitle, appStoreUrl}}>
+	const shareData = {
+		title: appTitle,
+		url: appStoreUrl
+	};
+
+	if (navigator.canShare(shareData)) {
+		const shareButton = document.querySelector('#share-button');
+
+		shareButton.style.display = 'block';
+
+		shareButton.addEventListener('click', async () => {
+			try {
+				await navigator.share(shareData);
+			} catch (error) {
+				console.error('Share failed:', error.message);
+			}
+		});
+	}
+</script>
+
+<script type="module" is:inline>
+	if (document.referrer.endsWith('/apps/random')) {
+		document.querySelector('#another-random-app').style.display = 'flex';
+	}
+</script>

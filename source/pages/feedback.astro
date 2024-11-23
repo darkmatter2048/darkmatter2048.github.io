@@ -1,0 +1,150 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import {fetchApps, proseCSS} from '~/utils/apps.js';
+
+const meta = {
+	title: 'Feedback & Support — DaYe',
+};
+
+// eslint-disable-next-line unicorn/no-await-expression-member
+const apps = (await fetchApps({includeUnlisted: true})).map(({
+	title,
+	url,
+	iconUrl,
+	repoUrl,
+	hasFaqSection,
+	feedbackNote,
+}) => ({
+	title,
+	url,
+	iconUrl,
+	repoUrl,
+	hasFaqSection,
+	feedbackNote,
+}));
+
+const inputCSS = 'block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500';
+
+const labelCSS = 'block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300';
+---
+
+<Layout {meta}>
+	<div id="main" class="flex flex-col sm:min-h-screen max-w-3xl mx-auto px-8 mt-6 mb-16" class={proseCSS}>
+		<div class="text-center">
+			<img id="app-icon" class="flex mx-auto mb-2 not-prose invisible" width="128" height="128">
+			<h1 id="product-name" class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-2 font-heading"></h1>
+			<h2 class="text-2xl md:text-3xl leading-tighter tracking-tighter mb-8">Feedback & Support</h2>
+			<div id="additional-info" class={proseCSS} style="font-size:16px"></div>
+			<!-- <div><br>I may take longer to respond as I'm on vacation. I appreciate your patience.</div><br> -->
+			<div><br>我可能需要更长的时间来回复，因为我目前很忙。感谢您的耐心等待。</div>
+			<div><br>此功能正在开发中，用问题请提交ISSUE，我会尽快修复。</div>
+			<div class={proseCSS} style="font-size:16px"><b>If you experience any issues with my apps after updating to iOS 18 / macOS 15, make sure you are on the latest update of my apps and try restarting your device one more time. It fixes a lot of issues. If you are still having problems with widgets, try changing the device language to something else and then back.</b><br><br>Because of a change in macOS 15, custom keyboard shortcuts with only the Option or Option+Shift modifier no longer works. This is out of my control. <a href="https://www.reddit.com/r/macapps/comments/1fjpiiw/psa_macos_15_breaks_optionkey_hotkeys/">Learn more.</a></div>
+		</div>
+		<form id="feedback-form" class="mt-8" action="https://formcarry.com/s/UBfgr97yfY" method="POST" enctype="multipart/form-data" onsubmit="document.querySelector('#submit-button').disabled=true">
+			<input type="hidden" name="_gotcha">
+			<div class="mb-6">
+				<label class={labelCSS} for="message">Message*</label>
+				<textarea class={inputCSS} placeholder="I'm a human. Please be nice." name="message" minlength="20" rows="7" required autofocus></textarea>
+			</div>
+			<div class="mb-6">
+				<label class={labelCSS} for="email">Email*</label>
+				<input class={inputCSS} type="email" name="email" autocomplete="email" required>
+				<small>Only used for replying to you.</small>
+			</div>
+			<div class="mb-6">
+				<label class={labelCSS} class="label" for="attachments">Attachments</label>
+				<input class={inputCSS} type="file" name="attachments" multiple>
+			</div>
+			<br>
+			<div class="mb-6">
+				<input type="hidden" id="captchaResponse" name="g-recaptcha-response">
+				<button id="submit-button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md w-full sm:w-auto px-6 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:opacity-50 disabled:pointer-events-none" type="submit">Send Feedback</button>
+			</div>
+			<!--<sub>If you haven't received a reply for two weeks, check your spam folder, it might be there.</sub>-->
+		</form>
+	</div>
+</Layout>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+
+<script type="module" is:inline define:vars={{apps}}>
+	if (window.location.search === '?success') {
+		$('#main').html('<h1 class="text-2xl mx-auto my-20">Thanks for the feedback!</h1>');
+
+		setTimeout(() => {
+			window.location.href = 'https://sindresorhus.com/apps';
+		}, 3000);
+	}
+
+	const params = new URL(location.href).searchParams;
+
+	if (params.has('product')) {
+		const product = params.get('product');
+		const app = apps.find(app => app.title === product);
+
+		$('title').text(`Feedback & Support for ${product} — Sindre Sorhus`);
+		$('#product-name').text(product);
+
+		if (app) {
+			$('#app-icon').css('visibility', 'visible').attr('src', app.iconUrl);
+		}
+
+		if (app?.repoUrl) {
+			const searchParams = new URLSearchParams();
+
+			searchParams.append('body', `<\!--\nProvide your feedback below. Include as many details as possible.\n-->\n\n\n\n---\n${params.get('metadata') ?? ''}`.trim());
+
+			const url = `${app.repoUrl}/issues/new?${searchParams}`;
+
+			$('#additional-info').show().append(`
+				If you have a GitHub account, <a href="${url}">open an issue on the repo</a> instead.
+			`);
+		}
+
+		if (app?.hasFaqSection) {
+			$('#additional-info').show().append(`
+				See the <a href="${app.url}#faq">app's frequently asked questions (FAQs)</a> and the <a href="/apps/faq">general FAQs</a> in case your question has already been answered.\nMake sure you are on the latest version and try to restart your device.\nIf the app crashed, it would be very helpful if you could send a <a href="/apps/faq#crash-report">crash report</a>.
+			`);
+		}
+
+		if (app?.feedbackNote) {
+			$('#additional-info').show().append(`<div>${app?.feedbackNote}</div>`);
+		}
+	}
+
+	const form = $('#feedback-form');
+
+	form.append(
+		$('<input type="hidden" name="timestamp">').val(Date.now())
+	);
+
+	// Include all the existing search params
+	for (const [key, value] of params) {
+		if (key === 'emailField') {
+			form.find('[name="email"]').val(value);
+			continue;
+		}
+
+		if (key === 'messageField') {
+			form.find('[name="message"]').val(value).get(0).setSelectionRange(0, 0);
+			continue;
+		}
+
+		if (key === 'extraInfo') {
+			form.append(
+				$(`<textarea style="display:none" readonly name="${key}"></textarea>`).text(value)
+			);
+			continue;
+		}
+
+		form.append(
+			$(`<input type="hidden" name="${key}">`).val(value)
+		);
+	}
+
+	if (params.get('metadata')) {
+		const url = new URL(window.location);
+		url.searchParams.delete('metadata');
+		window.history.replaceState({}, '', url);
+	}
+</script>
