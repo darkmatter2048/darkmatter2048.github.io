@@ -27,6 +27,7 @@ title: Donate
 
 ### 捐赠
 
+- [爱发电](https://afdian.com/a/donate_daye)
 - [微信赞赏](/assets/wechatpay.jpg) *(China)*
 - [B站充电](https://space.bilibili.com/1847808902?spm_id_from=333.788.0.0)
 
