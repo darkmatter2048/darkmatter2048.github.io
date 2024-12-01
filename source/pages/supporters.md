@@ -82,7 +82,7 @@ None -->
 
 ## 赞助者 <span class="reward-price not-prose">
 
-我永远感谢这些以前支持我的人和公司
+我永远感谢这些支持我的人和公司
 
 - [DevPole极数边缘云](https://www.devpole.com/?from=dyblog.online)
 - [乔星欢](https://www.qiaoxh.com/?from=dyblog.online)
