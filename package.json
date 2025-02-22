@@ -74,5 +74,8 @@
 			],
 			"unicorn/prevent-abbreviations": "off"
 		}
+	},
+	"dependencies": {
+		"node_extra_ca_certs_mozilla_bundle": "^1.0.6"
 	}
 }
