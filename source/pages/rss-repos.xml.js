@@ -2,7 +2,7 @@ import rss from '@astrojs/rss';
 import ky from 'ky';
 
 const fetchRepos = async () => {
-	const GITHUB_USERNAME = 'sindresorhus';
+	const GITHUB_USERNAME = 'darkmatter2048';
 	const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?type=owner&sort=created&per_page=20`;
 	const repos = await ky(GITHUB_API_URL).json();
 	return repos.filter(repo => !repo.archived && !repo.fork);

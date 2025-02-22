@@ -28,9 +28,9 @@ title: Donate
 ### 支持DaYe的开源工作
 - [爱发电](https://afdian.com/a/donate_daye)
 - [微信赞赏](/assets/wechatpay.jpg) *(China)*
-- [B站充电](https://space.bilibili.com/1847808902?spm_id_from=333.788.0.0)
+- [B站充电](https://space.bilibili.com/1847808902?from=dyblog.online)
 ### 慈善捐赠❤️
-- [哔哩哔哩公益](https://love.bilibili.com/?spm_id_from=333.337.0.0)
+- [哔哩哔哩公益](https://love.bilibili.com/?from=dyblog.online)
 
 <!-- ##### Buy my apps
 
