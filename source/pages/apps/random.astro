@@ -2,9 +2,9 @@
 import Layout from '~/layouts/SimplePageLayout.astro';
 import {fetchApps} from '~/utils/apps.js';
 
-const apps = await fetchApps();
+const apps = await fetchApps(); 
 
-const appSlugs = apps.map(app => app.slug);
+const appSlugs = apps.map(app => app.slug); 
 ---
 
 <Layout>
