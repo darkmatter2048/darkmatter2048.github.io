@@ -6,7 +6,6 @@ const apps = await fetchApps();
 
 const appSlugs = apps.map(app => app.slug); 
 ---
-
 <Layout>
 	<script type="module" define:vars={{appSlugs}}>
 		const randomItem = items => items[Math.floor(Math.random() * items.length)];
