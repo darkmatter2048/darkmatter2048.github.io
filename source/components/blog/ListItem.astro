@@ -1,5 +1,4 @@
 ---
-/// import PostTags from '~/components/blog/Tags.astro';
 import {getFormattedDate} from '~/utils/utils.js';
 
 const {post} = Astro.props;
@@ -35,7 +34,6 @@ const readingTimeText = post.isRedirect ? '' : ` — ${post.readingTime} min rea
 </article>
 
 <style is:inline>
-/* Workaround to not add hover underline to the external link symbol */
 article h2 a:hover {
 	box-shadow: inset 0 -4px 0 0 currentColor;
 	text-decoration: none !important;

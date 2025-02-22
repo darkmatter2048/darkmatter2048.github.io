@@ -12,7 +12,13 @@ feedbackNote: |
 ---
 ## 使用方法
 ### 下载和安装
+
+> 下载地址
+>
+> 从[夸克网盘](https://pan.quark.cn/s/03e706cb753a)下载Windows Cleaner(amd64)的安装包。
+
 从[蓝奏云网盘](https://wwzd.lanzn.com/b03xje5uf)下载Windows Cleaner(amd64)的安装包。
+
 密码:4ar1
 
 > 安装
