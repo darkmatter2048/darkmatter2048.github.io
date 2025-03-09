@@ -76,6 +76,9 @@ None -->
 	<img src="/assets/thanks/poster-logo.png" width="380" alt="WorkOS">
 </a>
 <br>
+<a href="https://ali-home.alibaba.com/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/alibaba.png" width="380" alt="WorkOS">
+</a>
 
 
 
@@ -86,6 +89,7 @@ None -->
 
 - [DevPole极数边缘云](https://www.devpole.com/?from=dyblog.online)
 - [乔星欢](https://www.qiaoxh.com/?from=dyblog.online)
+- [阿里巴巴(的某个旗下业务)](https://ali-home.alibaba.com/?from=dyblog.online)
 
 ## 成为一名赞助者
 
