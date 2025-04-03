@@ -43,6 +43,10 @@ feedbackNote: |
 >
 > A:允许此次下载或换个浏览器下载。
 
+> Q:图片和压缩包都显示函数不正确,无法打开
+>
+> A:控制面板——应用——搜索 “照片”——点击 “高级选项”——修复, 或者重置
+
 [Bilibili:Mr_Jacek](https://space.bilibili.com/1847808902?spm_id_from=333.1007.0.0)
 
 [View source code on Github](https://github.com/darkmatter2048/WindowsCleaner)
