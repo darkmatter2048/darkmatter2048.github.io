@@ -77,6 +77,6 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
-		"node_extra_ca_certs_mozilla_bundle": "^1.0.6"
+		"node_extra_ca_certs_mozilla_bundle": "^1.0.7"
 	}
 }
