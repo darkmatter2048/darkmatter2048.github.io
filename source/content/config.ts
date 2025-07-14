@@ -16,6 +16,7 @@ const appsCollection = defineCollection({
 			'visionOS',
 			'Linux',
 			'Windows',
+			'Android',
 		])),
 		repoUrl: z.string().url().optional(),
 		appStoreId: z.number().int().positive().safe().optional(),
