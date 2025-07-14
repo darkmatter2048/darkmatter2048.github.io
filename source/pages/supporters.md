@@ -68,6 +68,18 @@ None -->
 
 <!-- ## <span>🦄</span> Sponsor <span class="reward-price not-prose">[$1000/month](https://www.patreon.com/bePatron?c=95723&rid=1917470)</span> -->
 
+## 友链
+
+<a href="https://www.sakuraxy.top/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/xyres2.png" width="380" alt="WorkOS">
+</a>
+<br>
+<a href="https://vladelaina.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/vlad.png" width="380" alt="WorkOS">
+</a>
+
+#### 非常感谢[乔星欢的免费CDN服务](https://www.qiaoxh.com/?from=dyblog.online)❤️
+
 <a href="https://www.qiaoxh.com/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-3px">
 	<img src="/assets/thanks/logo.png" width="310" alt="GitHub">
 </a>
@@ -76,12 +88,9 @@ None -->
 	<img src="/assets/thanks/poster-logo.png" width="380" alt="WorkOS">
 </a>
 <br>
-<a href="https://ali-home.alibaba.com/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+<a href="https://ali-home.alibaba.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
 	<img src="/assets/thanks/alibaba.png" width="380" alt="WorkOS">
 </a>
-
-
-
 
 ## 赞助者 <span class="reward-price not-prose">
 
@@ -89,6 +98,8 @@ None -->
 
 - [DevPole极数边缘云](https://www.devpole.com/?from=dyblog.online)
 - [乔星欢](https://www.qiaoxh.com/?from=dyblog.online)
+- [Vladelaina](https://vladelaina.com/)
+- [玄夜の资源小站](https://www.sakuraxy.top/?from=dyblog.online)
 - [阿里巴巴(的某个旗下业务)](https://ali-home.alibaba.com/?from=dyblog.online)
 
 ## 成为一名赞助者

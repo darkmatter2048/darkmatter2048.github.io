@@ -4,6 +4,7 @@ subtitle: 一款第一人称射击游戏。
 pubDate: 2023-07-21
 platforms:
   - Windows
+  - Android
 isPaid: false
 olderMacOSVersions:
   - '13'
