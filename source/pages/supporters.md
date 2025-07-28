@@ -68,24 +68,29 @@ None -->
 
 <!-- ## <span>🦄</span> Sponsor <span class="reward-price not-prose">[$1000/month](https://www.patreon.com/bePatron?c=95723&rid=1917470)</span> -->
 
-## 友链
-
-<a href="https://www.sakuraxy.top/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
-	<img src="/assets/thanks/xyres2.png" width="380" alt="WorkOS">
-</a>
-<br>
-<a href="https://vladelaina.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
-	<img src="/assets/thanks/vlad.png" width="380" alt="WorkOS">
-</a>
-
 #### 非常感谢[乔星欢的免费CDN服务](https://www.qiaoxh.com/?from=dyblog.online)❤️
 
 <a href="https://www.qiaoxh.com/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-3px">
 	<img src="/assets/thanks/logo.png" width="310" alt="GitHub">
 </a>
 <br>
+
+#### [Ries.ai:实时创造英语接触,不上课也能获得十倍提升](https://ries.ai?c=5g71)
+
+<a href="https://ries.ai?c=5g71" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/ries.png" width="380" alt="WorkOS">
+</a>
+<br>
 <a href="https://www.devpole.com/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
 	<img src="/assets/thanks/poster-logo.png" width="380" alt="WorkOS">
+</a>
+<br>
+<a href="https://www.sakuraxy.top/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/xyres2.png" width="380" alt="WorkOS">
+</a>
+<br>
+<a href="https://catime.vladelaina.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/catime.png" width="380" alt="WorkOS">
 </a>
 <br>
 <a href="https://ali-home.alibaba.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
@@ -99,6 +104,7 @@ None -->
 - [DevPole极数边缘云](https://www.devpole.com/?from=dyblog.online)
 - [乔星欢](https://www.qiaoxh.com/?from=dyblog.online)
 - [Vladelaina](https://vladelaina.com/)
+- [Ries.ai: 实时创造英语接触,不上课也能获得十倍提升](https://ries.ai?c=5g71)
 - [玄夜の资源小站](https://www.sakuraxy.top/?from=dyblog.online)
 - [阿里巴巴(的某个旗下业务)](https://ali-home.alibaba.com/?from=dyblog.online)
 
