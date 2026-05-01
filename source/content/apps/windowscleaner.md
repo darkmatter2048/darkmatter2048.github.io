@@ -17,10 +17,6 @@ feedbackNote: |
 >
 > 从[夸克网盘](https://pan.quark.cn/s/03e706cb753a)下载Windows Cleaner(amd64)的安装包。
 
-从[蓝奏云网盘](https://wwzd.lanzn.com/b03xje5uf)下载Windows Cleaner(amd64)的安装包。
-
-密码:4ar1
-
 > 安装
 >
 > 一路Next即可，如果想以后方便打开可以勾选上`创建桌面快捷方式`选项。
