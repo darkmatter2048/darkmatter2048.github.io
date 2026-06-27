@@ -1,0 +1,186 @@
+name: Cleanup Actions Artifacts & Logs
+
+on:
+  schedule:
+    # 每周日 UTC 3:00 自动运行
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      retention_days:
+        description: '保留天数（超过此天数的产物和运行记录将被删除）'
+        required: false
+        type: number
+        default: 30
+      dry_run:
+        description: '试运行（不实际删除，仅预览将要删除的内容）'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  cleanup:
+    name: Cleanup old artifacts and workflow runs
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 清理旧的 Artifacts ──────────────────────────────────────────
+      - name: Cleanup old artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RETENTION_DAYS: ${{ inputs.retention_days || 30 }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
+        run: |
+          set -euo pipefail
+
+          CUTOFF_DATE=$(date -d "-${RETENTION_DAYS} days" -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "=== 清理超过 ${RETENTION_DAYS} 天的 Artifacts ==="
+          echo "截止日期: $CUTOFF_DATE"
+          echo ""
+
+          DELETED_COUNT=0
+          TOTAL_SIZE=0
+          PAGE=1
+
+          while true; do
+            # 获取当前页的 artifacts 列表
+            RESPONSE=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100&page=${PAGE}")
+
+            # 筛选超过保留期的 artifacts
+            OLD_ARTIFACTS=$(echo "$RESPONSE" | jq -c --arg cutoff "$CUTOFF_DATE" \
+              '.artifacts[] | select(.created_at < $cutoff) | {id: .id, name: .name, created_at: .created_at, size_in_bytes: .size_in_bytes}')
+
+            if [ -z "$OLD_ARTIFACTS" ]; then
+              break
+            fi
+
+            while IFS= read -r artifact; do
+              ARTIFACT_ID=$(echo "$artifact"   | jq -r '.id')
+              ARTIFACT_NAME=$(echo "$artifact" | jq -r '.name')
+              ARTIFACT_DATE=$(echo "$artifact" | jq -r '.created_at')
+              ARTIFACT_SIZE=$(echo "$artifact" | jq -r '.size_in_bytes')
+              SIZE_MB=$(( ARTIFACT_SIZE / 1024 / 1024 ))
+
+              if [ "$DRY_RUN" = "true" ]; then
+                echo "[DRY RUN] 将删除: $ARTIFACT_NAME (id=$ARTIFACT_ID, $ARTIFACT_DATE, ${SIZE_MB}MB)"
+              else
+                echo -n "删除: $ARTIFACT_NAME (id=$ARTIFACT_ID)... "
+                gh api --silent -X DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}" \
+                  && echo "✓" || echo "✗ 失败"
+              fi
+
+              DELETED_COUNT=$((DELETED_COUNT + 1))
+              TOTAL_SIZE=$((TOTAL_SIZE + ARTIFACT_SIZE))
+            done <<< "$OLD_ARTIFACTS"
+
+            # 如果本页不足 100 条，说明已是最后一页
+            TOTAL_COUNT=$(echo "$RESPONSE" | jq -r '.total_count // 0')
+            if [ "$TOTAL_COUNT" -le $(( PAGE * 100 )) ]; then
+              break
+            fi
+            PAGE=$((PAGE + 1))
+          done
+
+          echo ""
+          echo "── Artifacts 清理摘要 ──"
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "[DRY RUN] 将删除 $DELETED_COUNT 个 artifacts, 释放 $(( TOTAL_SIZE / 1024 / 1024 )) MB"
+          else
+            echo "已删除 $DELETED_COUNT 个 artifacts, 释放 $(( TOTAL_SIZE / 1024 / 1024 )) MB"
+          fi
+          echo "artifact_count=${DELETED_COUNT}" >> $GITHUB_OUTPUT
+          echo "artifact_size=$(( TOTAL_SIZE / 1024 / 1024 ))" >> $GITHUB_OUTPUT
+
+      # ── 清理旧的 Workflow 运行记录 ──────────────────────────────────
+      - name: Cleanup old workflow runs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RETENTION_DAYS: ${{ inputs.retention_days || 30 }}
+          DRY_RUN: ${{ inputs.dry_run || false }}
+        run: |
+          set -euo pipefail
+
+          CUTOFF_DATE=$(date -d "-${RETENTION_DAYS} days" -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "=== 清理超过 ${RETENTION_DAYS} 天的 Workflow 运行记录 ==="
+          echo "截止日期: $CUTOFF_DATE"
+          echo ""
+
+          DELETED_COUNT=0
+          PAGE=1
+
+          while true; do
+            RESPONSE=$(gh api \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100&page=${PAGE}&status=completed")
+
+            OLD_RUNS=$(echo "$RESPONSE" | jq -c --arg cutoff "$CUTOFF_DATE" \
+              '.workflow_runs[] | select(.created_at < $cutoff) | {id: .id, name: .name, display_title: .display_title, created_at: .created_at, event: .event}')
+
+            if [ -z "$OLD_RUNS" ]; then
+              break
+            fi
+
+            while IFS= read -r run; do
+              RUN_ID=$(echo "$run"   | jq -r '.id')
+              RUN_NAME=$(echo "$run" | jq -r '.name')
+              RUN_TITLE=$(echo "$run" | jq -r '.display_title')
+              RUN_DATE=$(echo "$run" | jq -r '.created_at')
+              RUN_EVENT=$(echo "$run" | jq -r '.event')
+
+              if [ "$DRY_RUN" = "true" ]; then
+                echo "[DRY RUN] 将删除: $RUN_NAME / $RUN_TITLE (id=$RUN_ID, $RUN_DATE, $RUN_EVENT)"
+              else
+                echo -n "删除: $RUN_NAME (id=$RUN_ID)... "
+                gh api --silent -X DELETE \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  "/repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}" \
+                  && echo "✓" || echo "✗ 失败"
+              fi
+
+              DELETED_COUNT=$((DELETED_COUNT + 1))
+            done <<< "$OLD_RUNS"
+
+            TOTAL_COUNT=$(echo "$RESPONSE" | jq -r '.total_count // 0')
+            if [ "$TOTAL_COUNT" -le $(( PAGE * 100 )) ]; then
+              break
+            fi
+            PAGE=$((PAGE + 1))
+          done
+
+          echo ""
+          echo "── Workflow 运行记录清理摘要 ──"
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "[DRY RUN] 将删除 $DELETED_COUNT 条运行记录"
+          else
+            echo "已删除 $DELETED_COUNT 条运行记录"
+          fi
+          echo "run_count=${DELETED_COUNT}" >> $GITHUB_OUTPUT
+
+      # ── 汇总输出到 Job Summary ──────────────────────────────────────
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## 🧹 Actions 清理报告"
+            echo ""
+            echo "| 项目 | 详情 |"
+            echo "|------|------|"
+            echo "| 运行时间 | $(date -u '+%Y-%m-%d %H:%M UTC') |"
+            echo "| 保留期限 | ${{ inputs.retention_days || 30 }} 天 |"
+            echo "| 模式 | ${{ inputs.dry_run == 'true' && '🔍 试运行（预览模式，未实际删除）' || '✅ 实际删除' }} |"
+            echo "| 下次自动运行 | 每周日 UTC 3:00 |"
+            echo "| 仓库 | ${{ github.repository }} |"
+          } >> $GITHUB_STEP_SUMMARY
