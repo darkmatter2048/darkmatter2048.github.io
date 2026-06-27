@@ -16,8 +16,6 @@ feedbackNote: |
 > 下载地址
 >
 > 从[夸克网盘](https://pan.quark.cn/s/03e706cb753a)下载Windows Cleaner(amd64)的安装包。
->
-> [备用下载点](https://pan.baidu.com/s/1zo-donfmfvAbARPSljMUWQ?pwd=qx64)
 
 > 安装
 >
