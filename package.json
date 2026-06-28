@@ -48,7 +48,8 @@
 		],
 		"ignores": [
 			"source/content/config.ts",
-			"public/hta-code-7175857.js"
+			"public/hta-code-7175857.js",
+			"public/keam-ad.js"
 		],
 		"overrides": [
 			{
