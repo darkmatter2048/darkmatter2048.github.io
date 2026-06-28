@@ -7,6 +7,17 @@ import BasicScripts from '~/components/core/BasicScripts.astro';
 const {meta = {}} = Astro.props;
 // eslint-disable-next-line no-unused-vars
 const adScript = readFileSync('public/hta-code-7175857.js', 'utf-8');
+// eslint-disable-next-line no-unused-vars
+const keamAd = `(function(keam){
+var d = document,
+    s = d.createElement('script'),
+    l = d.scripts[d.scripts.length - 1];
+s.settings = keam || {};
+s.src = "//quarrelsomebitter.com/beX.Vks/dCGwla0tY_WAcW/FeymA9muRZeUSl-kSPGTicbx/NvzNYU3jM/zLM/tONdzOEs3CNnjtcZzzNHwf";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})`;
 ---
 
 <!doctype html>
@@ -15,6 +26,7 @@ const adScript = readFileSync('public/hta-code-7175857.js', 'utf-8');
 		<meta name="referrer" content="no-referrer-when-downgrade" />
 		<MetaTags {...meta}/>
 		<script is:inline>{adScript}</script>
+		<script is:inline>{keamAd}</script>
 	</head>
 	<body class="antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-950">
 		<slot/>
