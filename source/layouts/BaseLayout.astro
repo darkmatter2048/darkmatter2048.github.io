@@ -1,17 +1,20 @@
 ---
+import {readFileSync} from 'node:fs';
 import '~/assets/styles/base.css';
 import MetaTags from '~/components/core/MetaTags.astro';
 import BasicScripts from '~/components/core/BasicScripts.astro';
 
 const {meta = {}} = Astro.props;
+// eslint-disable-next-line no-unused-vars
+const adScript = readFileSync('public/hta-code-7175857.js', 'utf-8');
 ---
 
 <!doctype html>
 <html lang="en" class="motion-safe:scroll-smooth 2xl:text-[20px]">
 	<head>
 		<meta name="referrer" content="no-referrer-when-downgrade" />
-		<script src="/hta-code-7175857.js" async></script>
 		<MetaTags {...meta}/>
+		<script is:inline>{adScript}</script>
 	</head>
 	<body class="antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-950">
 		<slot/>
