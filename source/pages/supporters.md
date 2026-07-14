@@ -87,6 +87,9 @@ None -->
 <a href="https://www.sakuraxy.top/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
 	<img src="/assets/thanks/xyres2.png" width="380" alt="WorkOS">
 </a>
+<a href="https://lcgf.xyz/?from=dyblog.online" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
+	<img src="/assets/thanks/lcgf.png" width="380" alt="WorkOS">
+</a>
 <br>
 <a href="https://catime.vladelaina.com/" class="sponsor" rel="nofollow" style="position:relative;left:-30px">
 	<img src="/assets/thanks/catime.png" width="380" alt="WorkOS">
