@@ -21,7 +21,7 @@ feedbackNote: |
 >
 > 一路Next即可，如果想以后方便打开可以勾选上`创建桌面快捷方式`选项。
 
-### FAQ
+### FAQ(针对5.x.x版本)
 
 > Q:为什么一点击深度清理就会闪退？
 >
@@ -49,6 +49,6 @@ feedbackNote: |
 >
 > A: [解决部分机型的Windows11深度清理后无法进入系统问题](https://zhuanlan.zhihu.com/p/627071728)
 
-[Bilibili:Mr_Jacek](https://space.bilibili.com/1847808902?spm_id_from=333.1007.0.0)
+[Bilibili:Mr_Jacek](https://space.bilibili.com/1847808902)
 
 [View source code on Github](https://github.com/darkmatter2048/WindowsCleaner)
